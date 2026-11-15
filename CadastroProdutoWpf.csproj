@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Imagens\foto_login_pousada.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Imagens\foto_login_pousada.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Imagens\logo_pousada_branco.png" />
+    <Resource Include="Imagens\logo_pousada_branco_hd.png" />
+    <Resource Include="Imagens\logo_pousada_verde_novo.png" />
+    <Resource Include="Imagens\logo_pousada_login_vertical.png" />
+    <Resource Include="Imagens\login_verde_sem_sobreposicao.png" />
+    <Resource Include="Imagens\login_painel_verde_final.png" />
+  </ItemGroup>
+
+</Project>

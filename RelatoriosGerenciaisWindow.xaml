@@ -1,0 +1,70 @@
+<Window x:Class="CadastroProdutoWpf.RelatoriosGerenciaisWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="Pousada Jardim - Relatórios gerenciais" Height="790" Width="1160" MinHeight="650" MinWidth="940"
+ WindowStartupLocation="CenterOwner" Background="#F7FBF4" FontFamily="Segoe UI">
+ <Window.Resources>
+  <Style x:Key="Acao" TargetType="Button"><Setter Property="Background" Value="#65AD43"/><Setter Property="Foreground" Value="White"/><Setter Property="BorderThickness" Value="0"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Padding" Value="15,9"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Margin" Value="0,0,8,0"/></Style>
+  <Style x:Key="FiltroTitulo" TargetType="TextBlock"><Setter Property="Foreground" Value="#375837"/><Setter Property="FontSize" Value="12"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Margin" Value="0,0,0,4"/></Style>
+ </Window.Resources>
+ <DockPanel>
+  <Border DockPanel.Dock="Top" Background="#65AD43" Padding="22,15"><StackPanel>
+   <TextBlock Text="Relatórios gerenciais" Foreground="White" FontSize="24" FontWeight="Bold"/>
+   <TextBlock Text="Estoque por setor, abaixo do mínimo e vencimentos por lote" Foreground="White" Margin="0,4,0,0"/>
+  </StackPanel></Border>
+  <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="18,12,18,10">
+   <Button Content="Atualizar" Style="{StaticResource Acao}" Click="BtnAtualizar_Click"/>
+   <Button Content="Salvar em PDF" Style="{StaticResource Acao}" Click="BtnPdf_Click"/>
+   <Button Content="Imprimir" Style="{StaticResource Acao}" Click="BtnImprimir_Click"/>
+   <Button Content="Exportar CSV" Style="{StaticResource Acao}" Click="BtnExportar_Click"/>
+   <Button Content="Histórico de movimentações" Style="{StaticResource Acao}" Click="BtnHistorico_Click"/>
+  </StackPanel>
+  <UniformGrid DockPanel.Dock="Top" Columns="3" Margin="15,0,15,10">
+   <Button Style="{StaticResource Acao}" Click="CardEstoque_Click" Margin="4" Content="▤  Estoque por setor"/>
+   <Button Style="{StaticResource Acao}" Click="CardMinimo_Click" Margin="4" Content="⚠  Abaixo do mínimo"/>
+   <Button Style="{StaticResource Acao}" Click="CardVencimentos_Click" Margin="4" Content="▦  Vencimentos por lote"/>
+  </UniformGrid>
+  <Border DockPanel.Dock="Top" Margin="18,0,18,12" BorderBrush="#D9E9CD" BorderThickness="1" CornerRadius="10" Background="White" Padding="13">
+   <StackPanel>
+    <DockPanel Margin="0,0,0,10">
+     <TextBlock Text="Filtros inteligentes" FontWeight="Bold" FontSize="16" Foreground="#31532D" DockPanel.Dock="Left"/>
+     <Button Content="Limpar filtros" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="BtnLimparFiltros_Click" Background="#E6F3DE" Foreground="#31532D" BorderThickness="0" Padding="13,6" Cursor="Hand"/>
+    </DockPanel>
+    <Grid>
+     <Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.4*"/><ColumnDefinition Width="1.5*"/></Grid.ColumnDefinitions>
+     <StackPanel Grid.Column="0" Margin="0,0,10,0">
+      <TextBlock Text="Pesquisar produto" Style="{StaticResource FiltroTitulo}"/>
+      <TextBox x:Name="txtProdutoFiltro" Height="30" Padding="7,3" TextChanged="TxtProdutoFiltro_TextChanged" ToolTip="Digite parte do nome. Selecione um dos produtos sugeridos."/>
+      <Popup x:Name="popupSugestoes" PlacementTarget="{Binding ElementName=txtProdutoFiltro}" Placement="Bottom" StaysOpen="False" AllowsTransparency="True" xmlns:pr="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+       <Border Background="White" BorderBrush="#B8D4A6" BorderThickness="1" MaxHeight="160" MinWidth="220" Padding="2">
+        <ListBox x:Name="listaSugestoes" SelectionChanged="ListaSugestoes_SelectionChanged" DisplayMemberPath="Nome" BorderThickness="0" MaxHeight="155"/>
+       </Border>
+      </Popup>
+     </StackPanel>
+     <StackPanel Grid.Column="1" Margin="0,0,10,0"><TextBlock Text="Categoria" Style="{StaticResource FiltroTitulo}"/><ComboBox x:Name="cmbCategoriaFiltro" Height="30" SelectionChanged="Filtro_SelectionChanged" DisplayMemberPath="Nome"/></StackPanel>
+     <StackPanel Grid.Column="2" Margin="0,0,10,0"><TextBlock Text="Setor" Style="{StaticResource FiltroTitulo}"/><ComboBox x:Name="cmbSetorFiltro" Height="30" SelectionChanged="Filtro_SelectionChanged" DisplayMemberPath="Nome"/></StackPanel>
+     <StackPanel Grid.Column="3" Margin="0,0,10,0"><TextBlock Text="Situação do estoque" Style="{StaticResource FiltroTitulo}"/><ComboBox x:Name="cmbSituacaoFiltro" Height="30" SelectionChanged="Filtro_SelectionChanged"/></StackPanel>
+     <StackPanel Grid.Column="4"><TextBlock Text="Validade" Style="{StaticResource FiltroTitulo}"/><ComboBox x:Name="cmbValidadeFiltro" Height="30" SelectionChanged="Filtro_SelectionChanged"/></StackPanel>
+    </Grid>
+    <DockPanel Margin="0,10,0,0">
+     <Button x:Name="btnColunas" Content="☷  Selecionar colunas" DockPanel.Dock="Left" Background="#E7F3DF" Foreground="#31532D" FontWeight="SemiBold" BorderThickness="0" Padding="12,7" Click="BtnColunas_Click" Cursor="Hand"/>
+     <TextBlock x:Name="lblResultados" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="#607B53"/>
+     <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+      <TextBlock Text="Avisar vencimento em até (dias):" VerticalAlignment="Center" Foreground="#375837"/>
+      <TextBox x:Name="txtDias" Text="30" Width="48" Height="28" Margin="8,0,0,0" VerticalContentAlignment="Center" LostFocus="TxtDias_LostFocus"/>
+     </StackPanel>
+     <Popup x:Name="popupColunas" PlacementTarget="{Binding ElementName=btnColunas}" Placement="Bottom" StaysOpen="False" AllowsTransparency="True">
+      <Border Background="White" BorderBrush="#B8D4A6" BorderThickness="1" Padding="12" CornerRadius="6">
+       <StackPanel x:Name="painelColunas" Width="195"/>
+      </Border>
+     </Popup>
+    </DockPanel>
+   </StackPanel>
+  </Border>
+  <TabControl x:Name="abas" Margin="18,0,18,18" SelectionChanged="Abas_SelectionChanged">
+   <TabItem Header="Estoque por setor"><DataGrid x:Name="gridEstoque" Margin="7" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" AlternatingRowBackground="#F3F9EE"/></TabItem>
+   <TabItem Header="Abaixo do mínimo"><DataGrid x:Name="gridMinimos" Margin="7" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" AlternatingRowBackground="#F3F9EE"/></TabItem>
+   <TabItem Header="Vencimentos por lote"><DataGrid x:Name="gridVencimentos" Margin="7" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" AlternatingRowBackground="#F3F9EE"/></TabItem>
+  </TabControl>
+ </DockPanel>
+</Window>

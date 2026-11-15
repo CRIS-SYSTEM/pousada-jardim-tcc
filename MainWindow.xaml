@@ -1,0 +1,407 @@
+<Window x:Class="CadastroProdutoWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Produtos"
+        Width="1280"
+        Height="860"
+        MinWidth="1050"
+        MinHeight="700"
+        WindowStartupLocation="CenterOwner"
+        Background="#F7FBF4">
+
+    <Window.Resources>
+
+        <!-- CAMPOS -->
+        <Style x:Key="Campo" TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#294D2A"/>
+            <Setter Property="BorderBrush" Value="#D2E5C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="Rotulo" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#355632"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <!-- BOTÃO PRINCIPAL -->
+        <Style x:Key="BotaoPrincipal" TargetType="Button">
+            <Setter Property="Height" Value="39"/>
+            <Setter Property="MinWidth" Value="105"/>
+            <Setter Property="Padding" Value="15,7"/>
+            <Setter Property="Background" Value="#79BE58"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Fundo"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="Fundo"
+                                        Property="Background"
+                                        Value="#65AD43"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Fundo"
+                                        Property="Opacity"
+                                        Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- BOTÃO SECUNDÁRIO -->
+        <Style x:Key="BotaoSecundario"
+               TargetType="Button"
+               BasedOn="{StaticResource BotaoPrincipal}">
+            <Setter Property="Background" Value="#E9F4E3"/>
+            <Setter Property="Foreground" Value="#65AD43"/>
+        </Style>
+
+        <!-- ABAS -->
+        <Style TargetType="TabItem">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#62785A"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Margin" Value="0,0,3,0"/>
+        </Style>
+
+        <!-- TABELA -->
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="RowHeight" Value="35"/>
+            <Setter Property="ColumnHeaderHeight" Value="38"/>
+            <Setter Property="AlternatingRowBackground"
+                    Value="#F4FAF1"/>
+            <Setter Property="BorderBrush" Value="#DCECCD"/>
+            <Setter Property="GridLinesVisibility"
+                    Value="Horizontal"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <Grid Margin="24,20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- CABEÇALHO COM BOTÃO DE RETORNO -->
+            <Grid Grid.Row="0" Margin="0,0,0,18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Cadastro de Produtos"
+                               FontSize="27"
+                               FontWeight="Bold"
+                               Foreground="#294D2A"/>
+                    <TextBlock Text="Gerencie os produtos utilizados na pousada."
+                               Foreground="#6A8062"
+                               FontSize="13"
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="← Voltar ao painel"
+                        Click="BtnVoltar_Click"
+                        Style="{StaticResource BotaoSecundario}"
+                        VerticalAlignment="Center"
+                        Margin="15,0,0,0"/>
+            </Grid>
+
+            <!-- ABAS -->
+            <TabControl x:Name="abasProdutos"
+                        Grid.Row="1"
+                        Background="White"
+                        BorderBrush="#DCECCD">
+
+                <!-- ABA CADASTRO -->
+                <TabItem Header="Cadastro de produtos">
+
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="Auto">
+
+                        <StackPanel Margin="18">
+
+
+                            <!-- FORMULÁRIO DE CADASTRO E EDIÇÃO -->
+                            <Border Background="White"
+                                    BorderBrush="#E2EED9"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    Padding="20">
+                                <StackPanel>
+                                    <TextBlock Text="Dados do Produto"
+                                               FontSize="19"
+                                               FontWeight="Bold"
+                                               Foreground="#65AD43"
+                                               Margin="0,0,0,20"/>
+                                    <Grid Margin="0,0,0,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                            <TextBlock Text="Nome do produto *" Style="{StaticResource Rotulo}"/>
+                                            <TextBox x:Name="txtNome" Style="{StaticResource Campo}"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                            <TextBlock Text="Preço unitário *" Style="{StaticResource Rotulo}"/>
+                                            <TextBox x:Name="txtPreco" Style="{StaticResource Campo}"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                            <TextBlock Text="Saldo: registrar em Movimentações"
+                                                       Foreground="#65AD43" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Margin="0,0,0,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                            <TextBlock Text="Categoria *" Style="{StaticResource Rotulo}"/>
+                                            <ComboBox x:Name="cmbCategoria"
+                                                      Height="38"
+                                                      DisplayMemberPath="Nome"
+                                                      SelectedValuePath="IdCategoria"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                            <TextBlock Text="Unidade de medida *" Style="{StaticResource Rotulo}"/>
+                                            <ComboBox x:Name="cmbUnidade" Height="38" SelectedIndex="0">
+                                                <ComboBoxItem Content="UN"/>
+                                                <ComboBoxItem Content="KG"/>
+                                                <ComboBoxItem Content="G"/>
+                                                <ComboBoxItem Content="L"/>
+                                                <ComboBoxItem Content="ML"/>
+                                                <ComboBoxItem Content="CX"/>
+                                                <ComboBoxItem Content="PCT"/>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                            <TextBlock Text="Vencimento: controlar por lote"
+                                                       Foreground="#65AD43" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <CheckBox x:Name="chkAtivo"
+                                              Content="Produto ativo"
+                                              IsChecked="True"
+                                              Foreground="#65AD43"
+                                              FontWeight="SemiBold"
+                                              Margin="0,0,0,18"/>
+                                    <WrapPanel>
+                                        <Button x:Name="btnSalvar"
+                                                Content="Salvar produto"
+                                                Click="BtnSalvar_Click"
+                                                Style="{StaticResource BotaoPrincipal}"
+                                                Margin="0,0,10,8"/>
+                                        <Button x:Name="btnInativar"
+                                                Content="Inativar"
+                                                Click="BtnInativar_Click"
+                                                IsEnabled="False"
+                                                Style="{StaticResource BotaoSecundario}"
+                                                Margin="0,0,10,8"/>
+                                        <Button Content="Limpar"
+                                                Click="BtnLimpar_Click"
+                                                Style="{StaticResource BotaoSecundario}"
+                                                Margin="0,0,10,8"/>
+                                    </WrapPanel>
+                                    <TextBlock x:Name="lblModo"
+                                               Text="Modo: novo cadastro"
+                                               Foreground="#6A8062"
+                                               FontSize="12"
+                                               Margin="0,6,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- LISTAGEM DE PRODUTOS -->
+                            <Border Background="White"
+        BorderBrush="#DCECCD"
+        BorderThickness="1"
+        CornerRadius="10"
+        Padding="18"
+        Margin="0,18,0,0">
+
+                                <StackPanel>
+
+                                    <TextBlock
+            Text="Produtos cadastrados"
+            FontSize="19"
+            FontWeight="Bold"
+            Foreground="#65AD43"
+            Margin="0,0,0,15"/>
+
+                                    <!-- PESQUISA -->
+                                    <Grid Margin="0,0,0,14">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox x:Name="txtPesquisa"
+                     Grid.Column="0"
+                     Style="{StaticResource Campo}"
+                     ToolTip="Pesquisar por nome ou categoria"
+                     TextChanged="TxtPesquisa_TextChanged"/>
+
+                                        <ComboBox Grid.Column="1" x:Name="cmbFiltroStatus" Width="140" Height="38" Margin="10,0,0,0" SelectionChanged="FiltroStatus_Changed" SelectedIndex="0">
+                                            <ComboBoxItem Content="Todos"/>
+                                            <ComboBoxItem Content="Ativos"/>
+                                            <ComboBoxItem Content="Inativos"/>
+                                        </ComboBox>
+                                        <Button Grid.Column="2"
+                    Content="↻  Atualizar"
+                    Click="BtnAtualizarLista_Click"
+                    Style="{StaticResource BotaoSecundario}"
+                    Margin="10,0,0,0"/>
+                                    </Grid>
+
+                                    <!-- TABELA -->
+                                    <DataGrid x:Name="gridProdutos"
+                  Height="265"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#EDF3E7"
+                  VerticalGridLinesBrush="Transparent"
+                  RowHeight="39"
+                  ColumnHeaderHeight="42"
+                  Background="White"
+                  RowBackground="White"
+                  AlternatingRowBackground="#F7FBF4"
+                  BorderBrush="#E4EFE0"
+                  BorderThickness="1"
+                  SelectionChanged="GridProdutos_SelectionChanged">
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="Background"
+                            Value="#EAF6E3"/>
+                                                <Setter Property="Foreground"
+                            Value="#294D2A"/>
+                                                <Setter Property="FontWeight"
+                            Value="SemiBold"/>
+                                                <Setter Property="Padding"
+                            Value="10,8"/>
+                                                <Setter Property="BorderThickness"
+                            Value="0"/>
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Padding"
+                            Value="9,4"/>
+                                                <Setter Property="BorderThickness"
+                            Value="0"/>
+                                                <Setter Property="VerticalContentAlignment"
+                            Value="Center"/>
+                                                <Setter Property="Foreground"
+                            Value="#2C462C"/>
+                                            </Style>
+                                        </DataGrid.CellStyle>
+
+                                        <DataGrid.Columns>
+
+                                            <DataGridTextColumn
+                    Header="Código"
+                    Binding="{Binding IdProduto}"
+                    Width="75"/>
+
+                                            <DataGridTextColumn
+                    Header="Produto"
+                    Binding="{Binding Nome}"
+                    Width="*"/>
+
+                                            <DataGridTextColumn
+                    Header="Categoria"
+                    Binding="{Binding NomeCategoria}"
+                    Width="125"/>
+
+                                            <DataGridTextColumn
+                    Header="Preço"
+                    Binding="{Binding Preco, StringFormat={}{0:N2}}"
+                    Width="90"/>
+
+
+                                            <DataGridTextColumn
+                    Header="Unid."
+                    Binding="{Binding UnidadeMedida}"
+                    Width="65"/>
+
+
+                                            <DataGridCheckBoxColumn
+                    Header="Ativo"
+                    Binding="{Binding Situacao, Mode=OneWay}"
+                    IsReadOnly="True"
+                    Width="65"/>
+
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <TextBlock
+            Text="Selecione um produto para visualizar ou editar seus dados."
+            Foreground="#6A8062"
+            FontSize="12"
+            Margin="0,12,0,0"/>
+
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+
+                    </ScrollViewer>
+
+                </TabItem>
+
+                <!-- Estoque, lotes e movimentações são módulos independentes,
+                     acessíveis pelo Painel Principal. Não exibir abas simuladas. -->
+
+            </TabControl>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,23 @@
+<Window x:Class="CadastroProdutoWpf.RequisicoesWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Pousada Jardim - Requisições" Width="770" Height="790" WindowStartupLocation="CenterOwner" Background="#F7FBF4">
+<ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="26">
+<TextBlock Text="Requisições físicas de estoque" FontSize="24" FontWeight="Bold" Foreground="#31582F"/>
+<TextBlock Text="A emissão do PDF não movimenta o estoque." Margin="0,8,0,18" Foreground="#596E51"/>
+<TextBlock Text="Tipo de requisição"/><ComboBox x:Name="cmbTipo" Height="36" Margin="0,5,0,12" SelectedIndex="0" SelectionChanged="SelecaoAlterada"><ComboBoxItem Content="Saída - consumo do setor"/><ComboBoxItem Content="Entrada - compra / recebimento"/></ComboBox>
+<TextBlock Text="Data da requisição"/><DatePicker x:Name="dpEmissao" Height="35" Margin="0,5,0,12"/>
+<TextBlock Text="Data da retirada / recebimento"/><DatePicker x:Name="dpEfetiva" Height="35" Margin="0,5,0,12"/>
+<TextBlock Text="Setor de origem / destino (nome exato)"/><TextBox x:Name="txtSetor" Height="32" Margin="0,5,0,12" TextChanged="SetorAlterado"/>
+<TextBlock Text="Setor solicitante"/><TextBox x:Name="txtSolicitante" Height="32" Margin="0,5,0,12"/>
+<TextBlock Text="Período de utilização"/><TextBox x:Name="txtPeriodo" Height="32" Margin="0,5,0,12"/>
+<TextBlock Text="Funcionário que retira / recebe fisicamente"/><TextBox x:Name="txtFuncionario" Height="32" Margin="0,5,0,12"/>
+<TextBlock Text="Responsável pela entrega"/><TextBox x:Name="txtEntrega" Height="32" Margin="0,5,0,12"/>
+<TextBlock Text="Responsável pelo lançamento no sistema"/><TextBox x:Name="txtLancamento" Height="32" Margin="0,5,0,16"/>
+<CheckBox x:Name="chkProdutos" Content="Preencher nomes dos produtos cadastrados" Margin="0,0,0,10" Checked="SelecaoAlterada" Unchecked="SelecaoAlterada"/>
+<Border Background="White" BorderBrush="#DDEBD4" BorderThickness="1" Padding="12" Margin="0,0,0,14">
+<StackPanel>
+<StackPanel Orientation="Horizontal" Margin="0,0,0,8"><Button Content="Carregar produtos" Click="CarregarProdutos_Click" Padding="14,8" Background="#65AD43" Foreground="White" BorderThickness="0"/><Button Content="Selecionar todos" Click="Todos_Click" Margin="10,0,0,0" Padding="12,8"/><Button Content="Limpar seleção" Click="Nenhum_Click" Margin="8,0,0,0" Padding="12,8"/></StackPanel>
+<TextBlock x:Name="txtContagem" Text="Marque a opção acima e carregue os produtos." FontSize="12" Foreground="#596E51" Margin="0,0,0,6"/>
+<ListBox x:Name="lstProdutos" Height="175" BorderBrush="#DDEBD4" SelectionMode="Extended" DisplayMemberPath="Descricao" SelectionChanged="ListaSelecaoAlterada"/>
+<TextBlock Text="Use Ctrl ou Shift para selecionar vários produtos. A ordem será alfabética. Mais de 14 itens geram páginas adicionais." TextWrapping="Wrap" FontSize="12" Foreground="#596E51" Margin="0,7,0,0"/>
+</StackPanel></Border>
+<Button Content="Gerar PDF para impressão" Height="44" Background="#65AD43" Foreground="White" FontWeight="Bold" Click="GerarPdf_Click"/>
+</StackPanel></ScrollViewer></Window>

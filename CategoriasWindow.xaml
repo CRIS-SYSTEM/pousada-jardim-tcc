@@ -1,0 +1,47 @@
+<Window x:Class="CadastroProdutoWpf.CategoriasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pousada Jardim - Categorias" Width="980" Height="650"
+        MinWidth="750" MinHeight="500" WindowStartupLocation="CenterOwner"
+        Background="#F7FAF3">
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="84"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+        <Border Background="#65AD43" Padding="26,14">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Cadastro de Categorias" Foreground="White" FontWeight="Bold" FontSize="24"/>
+                <TextBlock Text="Gerencie os registros sem perder os vínculos do estoque" Foreground="#E7F2DF" FontSize="13"/>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1" Margin="22">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <DataGrid x:Name="gridItens" AutoGenerateColumns="False" IsReadOnly="True"
+                      CanUserAddRows="False" SelectionChanged="GridItens_SelectionChanged"
+                      SelectionMode="Single" Margin="0,0,16,0" RowHeight="34">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Código" Binding="{Binding IdCategoria}" Width="75"/>
+                    <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" Width="*"/>
+                    <DataGridTextColumn Header="Descrição" Binding="{Binding Descricao}" Width="1.5*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Border Grid.Column="1" Background="White" BorderBrush="#DAEAD3" BorderThickness="1"
+                    CornerRadius="9" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Dados do cadastro" Foreground="#65AD43" FontSize="18" FontWeight="Bold" Margin="0,0,0,18"/>
+                    <TextBlock Text="Nome *" Foreground="#31582F"/>
+                    <TextBox x:Name="txtNome" MaxLength="100" Height="35" Padding="8" Margin="0,5,0,15"/>
+                    <TextBlock Text="Descrição (opcional)" Foreground="#31582F"/>
+                    <TextBox x:Name="txtDescricao" MaxLength="255" Height="100" TextWrapping="Wrap"
+                             AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="8" Margin="0,5,0,15"/>
+                    <WrapPanel>
+                        <Button Content="Novo / Limpar" Width="115" Height="36" Margin="0,0,8,8" Click="Novo_Click"/>
+                        <Button Content="Salvar" Width="100" Height="36" Margin="0,0,8,8" Click="Salvar_Click"
+                                Background="#65AD43" Foreground="White" BorderThickness="0"/>
+                        <Button Content="Atualizar lista" Width="110" Height="36" Margin="0,0,8,8" Click="Atualizar_Click"/>
+                    </WrapPanel>
+                    <TextBlock Text="A exclusão não está disponível para preservar os relacionamentos e o histórico."
+                               Foreground="#62795B" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

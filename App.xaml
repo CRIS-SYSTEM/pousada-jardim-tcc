@@ -1,0 +1,47 @@
+<Application x:Class="CadastroProdutoWpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="LoginWindow.xaml"
+             ShutdownMode="OnMainWindowClose">
+
+    <Application.Resources>
+        <!-- Aparencia padrao de botoes de acao; estilos locais especificos de cards permanecem intactos. -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#65AD43"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderBrush" Value="#65AD43"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="10,6"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="#D8E8D0"/>
+            <Setter Property="BorderThickness" Value="1"/><Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F3F9EE"/><Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="HeadersVisibility" Value="Column"/><Setter Property="RowHeight" Value="38"/>
+            <Setter Property="ColumnHeaderHeight" Value="42"/><Setter Property="HorizontalGridLinesBrush" Value="#E8F1E1"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#DEEDD4"/><Setter Property="Foreground" Value="#244B28"/>
+            <Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Padding" Value="12,6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="9,3"/><Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="FontSize" Value="13"/><Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="17,10"/><Setter Property="Foreground" Value="#244B28"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#C3DAB7"/><Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/><Setter Property="Foreground" Value="#2B4E2A"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="BorderBrush" Value="#C3DAB7"/><Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2B4E2A"/>
+        </Style>
+    </Application.Resources>
+
+</Application>
